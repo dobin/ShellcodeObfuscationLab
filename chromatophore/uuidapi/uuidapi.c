@@ -10,6 +10,7 @@ struct ustring {
 	PUCHAR Buffer;
 } _data, key;
 
+
 int main(void)
 {
     {{ANTI_EMULATION}}

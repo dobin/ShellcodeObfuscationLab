@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-
 from typing import Iterator
-from base64 import b64encode
-from sys import argv,exit,stderr
-import argparse
 import random
 import string
 

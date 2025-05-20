@@ -9,9 +9,6 @@
 	Calling SystemFunction033 on an a buffer containing encrypted data decrypts the data in the buffer.
 */
 
-// compile: 
-//  cl.exe /nologo /W0 /DNDEBUG /Tcrc4.c /link /OUT:rc4.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-
 
 // Function prototype for SystemFunction033
 typedef NTSTATUS(WINAPI* _SystemFunction033)(
@@ -25,6 +22,7 @@ struct ustring {
 	DWORD MaximumLength;
 	PUCHAR Buffer;
 } _data, key;
+
 
 int main() {
 	{{ANTI_EMULATION}}

@@ -1,6 +1,6 @@
 import random
-import argparse
 import sys
+
 
 def gen_word_combinations(dict_file):
     # read in words dictionary
@@ -39,37 +39,6 @@ def get_shellcode(input_file):
 
 
 def jargon(input_file):
-    if False:
-        ### Parse our arguments
-        parser = argparse.ArgumentParser()
-        parser.add_argument("-d", "--dictionary", type=str,
-                            help="Dictionary file. Defaults to 'dictionary.txt.'")
-        parser.add_argument("-i", "--input", type=str,
-                            help="File containing raw shellcode.")
-        parser.add_argument("-o", "--output", type=str,
-                            help="Output file. Defaults to 'generated.c.'")
-
-        args = parser.parse_args()
-        if len(sys.argv) == 1:
-            # No arguments received.  Print help and exit
-            parser.print_help(sys.stderr)
-            sys.exit(0)
-
-        if args.input:
-            input_file = args.input
-        else:
-            input_file = "beacon.bin"
-
-        if args.output:
-            output_file = args.output
-        else:
-            output_file = "generated.c"
-
-        if args.dictionary:
-            dict_file = args.dictionary
-        else:
-            dict_file = "dictionary.txt"
-    
     # absolute path because our working directory 
     # will be the root of the project
     dict_file = "chromatophore/jargon/google-10000-english-usa-5char.txt"

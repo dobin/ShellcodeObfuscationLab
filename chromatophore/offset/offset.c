@@ -2,8 +2,6 @@
 #include <string.h>
 #include <windows.h>
 
-// Compile:
-//   cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcoffset.c /link /out:offset.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
 
 int main(){
 	{{ANTI_EMULATION}}

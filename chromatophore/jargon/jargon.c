@@ -1,8 +1,6 @@
 #include <windows.h>
 #include <stdio.h>
 
-// compile:
-//  cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcjargon.c /link /out:jargon.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
 
 int main(void)
 {

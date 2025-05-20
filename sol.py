@@ -19,6 +19,8 @@ from chromatophore.xor_multibyte import xor_multibyte
 from chromatophore.reverse_hex_string import reverse_hex_string
 from chromatophore.twoarray import twoarray
 from chromatophore.uuidapi import uuidapi
+from chromatophore.caesar import caesar
+from chromatophore.noobfuscation import noobfuscation
 
 #import importlib
 #def ImportChromatophore():
@@ -31,18 +33,14 @@ from chromatophore.uuidapi import uuidapi
 #        print(f"{name}() => {result}")
 
 
-
-def no_encoding(_input_file):
-    return ""
-
-
 function_map = {
-    "noobfuscation": no_encoding,
+    "noobfuscation": noobfuscation.noobfuscation,
     "aes": aes.aes,
     "base64": base64.base64,
     "base64api": base64api.base64api,
     "bin2ip": bin2ip.bin2ip,
     "bin2mac": bin2mac.bin2mac,
+    "caesar": caesar.caesar,
     "jargon": jargon.jargon,
     "jigsaw": jigsaw.jigsaw,
     "offset": offset.offset,
@@ -123,8 +121,7 @@ def do():
     #   - in: output/bin2mac.exe
     #   - out: output/bin2mac.exe.json
 
-    #module = "noobfuscation"
-    module = "xor_multibyte"
+    module = "noobfuscation"
 
     print("Templating")
 

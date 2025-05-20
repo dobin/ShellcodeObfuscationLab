@@ -1,6 +1,6 @@
 # SOL ShellcodeObfuscationLab
 
-Shellcode obfuscations are based on RedSiege [Chromatophore](https://github.com/RedSiege/Chromatophore/). 
+Shellcode obfuscations laboratory based on RedSiege [Chromatophore](https://github.com/RedSiege/Chromatophore/). 
 
 
 ## Usage
