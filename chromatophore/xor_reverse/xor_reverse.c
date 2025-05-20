@@ -10,7 +10,7 @@ int main(void)
 
 	{{SHELLCODE}}
 
-        char shellcode[598] = {0};
+        char shellcode[sizeof(reversed_payload)] = {0};
         unsigned int len = sizeof(reversed_payload);
         int xorkey = 23;
 

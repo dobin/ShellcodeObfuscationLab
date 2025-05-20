@@ -14,12 +14,12 @@ int main(void) {
 	printf("Reversed hex string: %s\n", hex_string);
 
 	// declare a new shellcode byte array
-	char shellcode[598];
+	char shellcode[sizeof(reversed_hex_string)] = { 0 };
 	
 	// define an index to keep track of where we're at
 	int idx = 0;
 	int count = 0;
-	const int MAX_TOKENS = 598;
+	const int MAX_TOKENS = sizeof(reversed_hex_string);
 	char* next_token = NULL;
 	char* token = strtok_s(hex_string, ",", &next_token);
 	while (token != NULL && count < MAX_TOKENS) {
