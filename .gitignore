@@ -1,0 +1,6 @@
+*_work.c
+output/
+__pycache__
+*.obj
+.vscode/
+todo.md
