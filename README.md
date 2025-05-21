@@ -99,7 +99,7 @@ Conclusion:
 
 The results of the test are at [lab_results/](https://github.com/dobin/ShellcodeObfuscationLab/tree/main/lab_results). 
 For example the generated [aes.c source code](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/aes_work.c),
-and [VirusTotal result](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/aes.exe.json).
+and its [VirusTotal result](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/aes.exe.json).
 
 
 ## SOL Usage
@@ -115,7 +115,7 @@ To send all the exes to VirusTotal:
 
 ```
 > set VT_API_KEY=123...
-> python.exe sol.py 
+> python.exe sol.py vt
 ```
 
 Output is in `output/*.exe.json` and `output/scan_results.txt`. 
