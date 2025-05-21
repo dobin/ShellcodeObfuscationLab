@@ -72,7 +72,7 @@ The "metasploit" does not execute the shellcode, only decodes and prints it.
 Conclusion: 
 * The type of encoding/encryption doesnt matter
 * More important is if a windows API is being used/imported (static analysis, e.g. IAT in PE)
-* Note that NO obfuscation metasploit outperforms AES encryption, base64 windows api, ip-, mac- and uuid-encoding
+* Note that the "NO-obfuscation" (plaintext) metasploit outperforms AES encryption, base64 windows api, ip-, mac- and uuid-encoding
 * VirusTotal has maybe one memory scanner. The rest seem to be static analysis. 
 
 | **What**           | **Library**           | **Includes**              | **Function / IAT**                 | **Random** | **Metasploit** |
