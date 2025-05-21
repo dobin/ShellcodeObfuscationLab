@@ -74,7 +74,7 @@ Conclusion:
 * Note that NO obfuscation metasploit outperforms AES encryption, base64 windows api, ip-, mac- and uuid-encoding
 * VirusTotal has maybe one memory scanner. The rest seem to be static analysis. 
 
-| **What**           | **Library**           | **Includes**              | **Function / IAT**                 | **Random** | **tasploit** |
+| **What**           | **Library**           | **Includes**              | **Function / IAT**                 | **Random** | **Metasploit** |
 | ------------------ | --------------------- | ------------------------- | ---------------------------------- | ---------- | -------------- |
 | aes                | crypt32.lib, advapi32 | wincrypt.h                | Crypt\*                            | **5**          | **6**              |
 | base64             | \-                    | \-                        | \-                                 | 3          | 3              |
