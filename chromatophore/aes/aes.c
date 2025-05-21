@@ -4,7 +4,6 @@
 #pragma comment (lib, "crypt32.lib")
 #pragma comment (lib, "advapi32")
 
-// compile: cl.exe /nologo /Tcaes.c /link /out:aes.exe /SUBSYSTEM:CONSOLE /MACHINE:x64
 
 int AESDecrypt(char * payload, unsigned int payload_len, char * key, size_t keylen) {
     HCRYPTPROV hProv;
