@@ -39,7 +39,7 @@ RedSiege came to the following wrong result:
 | No Obfuscation     | 27       |
 
 
-But didnt bother to question the data. There are many issues with it: 
+But didnt attempt to question the data. There are some issues with it: 
 
 * Why are the top three Base64, UUID, and reverse hex string? Especially the later is very obscure
 * No negative test (without malicious shellcode)
@@ -50,8 +50,8 @@ But didnt bother to question the data. There are many issues with it:
 * As they store the shellcode in a variable, static analysis tools can try out their deobfuscation on all the variables (explains high detection of ReverseString and Base64)
 * Scans performed with large intervals between them (weeks?)
 
-Which means that the test has been performed wrong, and the results are invalid. 
-Any conclusion based on the data is also invalid - and building [trainings](https://redsiege.com/training-av-edr-evasion/) on it distributes the misinformation. 
+Which means that the test has been performed wrong, and the results are invalid, 
+and conclusions based on the data are misleading. 
 
 Luckily RedSiege published the [shellcode encoder sources](https://github.com/RedSiege/Chromatophore).
 I made this framework based on it to test it for myself. 
@@ -77,24 +77,24 @@ Conclusion:
 
 | **What**           | **Library**           | **Includes**              | **Function / IAT**                 | **Random** | **Metasploit** |
 | ------------------ | --------------------- | ------------------------- | ---------------------------------- | ---------- | -------------- |
-| aes                | crypt32.lib, advapi32 | wincrypt.h                | Crypt\*                            | **5**          | **6**              |
-| base64             | \-                    | \-                        | \-                                 | 3          | 3              |
-| base64api          | crypt32.lib           | wincrypt.h                | CryptStringToBinaryA               | **5**          | **6**              |
-| bin2ip             | Ntdll.lib             | ntstatus.h<br>Ip2string.h | RtlIpv4StringToAddressA            | **8**          | **10**             |
-| bin2mac            | Ntdll.lib             | ntstatus.h<br>Ip2string.h | RtlEthernetStringToAddressA        | **8**          | **18**             |
-| cesar              | \-                    | \-                        | \-                                 | 2          | 2              |
-| jargon             | \-                    | \-                        | \-                                 | 3          | 2              |
-| jigsaw             | \-                    | \-                        | \-                                 | 2          | 3              |
-| offset             | \-                    | \-                        | \-                                 | 2          | 3              |
-| rc4api             | \-                    | \-                        | GetProcAddress (SystemFunction033) | 2          | 2              |
-| reverse_byte_order | \-                    | \-                        | \-                                 | 2          | 2              |
-| reverse_hex_string | \-                    | \-                        | \-                                 | 2          | 2              |
-| twoarray           | \-                    | \-                        | \-                                 | 2          | 3              |
-| uuidapi            | rpcrt4.lib            | rpc.h                     | UuidFromStringA                    | **8**          | **11**             |
-| xor_multibyte      | \-                    | \-                        | \-                                 | 1          | 2              |
-| xor_reverse        | \-                    | \-                        | \-                                 | 2          | 3              |
-| xor_single         | \-                    | \-                        | \-                                 | 1          | 3              |
-| **NO OBFUSCATION**     | \-                    | \-                        | \-                                 | 2          | 3              |
+| [aes](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/aes_work.c)                | crypt32.lib, advapi32 | wincrypt.h                | Crypt\*                            | **5**          | **6**              |
+| [base64](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/base64_work.c)             | \-                    | \-                        | \-                                 | 3          | 3              |
+| [base64api](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/base64api_work.c)          | crypt32.lib           | wincrypt.h                | CryptStringToBinaryA               | **5**          | **6**              |
+| [bin2ip](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/bin2ip_work.c)             | Ntdll.lib             | ntstatus.h<br>Ip2string.h | RtlIpv4StringToAddressA            | **8**          | **10**             |
+| [bin2mac](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/bin2mac_work.c)            | Ntdll.lib             | ntstatus.h<br>Ip2string.h | RtlEthernetStringToAddressA        | **8**          | **18**             |
+| [caesar](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/caesar_work.c)              | \-                    | \-                        | \-                                 | 2          | 2              |
+| [jargon](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/jargon_work.c)             | \-                    | \-                        | \-                                 | 3          | 2              |
+| [jigsaw](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/jigsaw_work.c)             | \-                    | \-                        | \-                                 | 2          | 3              |
+| [offset](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/offset_work.c)             | \-                    | \-                        | \-                                 | 2          | 3              |
+| [rc4api](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/rc4api_work.c)             | \-                    | \-                        | GetProcAddress (SystemFunction033) | 2          | 2              |
+| [reverse_byte_order](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/reverse_byte_order_work.c) | \-                    | \-                        | \-                                 | 2          | 2              |
+| [reverse_hex_string](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/reverse_hex_string_work.c) | \-                    | \-                        | \-                                 | 2          | 2              |
+| [twoarray](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/twoarray_work.c)           | \-                    | \-                        | \-                                 | 2          | 3              |
+| [uuidapi](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/uuidapi_work.c)            | rpcrt4.lib            | rpc.h                     | UuidFromStringA                    | **8**          | **11**             |
+| [xor_multibyte](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/xor_multibyte_work.c)      | \-                    | \-                        | \-                                 | 1          | 2              |
+| [xor_reverse](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/xor_reverse_work.c)        | \-                    | \-                        | \-                                 | 2          | 3              |
+| [xor_single](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/xor_single_work.c)         | \-                    | \-                        | \-                                 | 1          | 3              |
+| [**NO OBFUSCATION**](https://github.com/dobin/ShellcodeObfuscationLab/blob/main/lab_results/metasploit/noobfuscation_work.c)     | \-                    | \-                        | \-                                 | 2          | 3              |
 
 
 The results of the test are at [lab_results/](https://github.com/dobin/ShellcodeObfuscationLab/tree/main/lab_results). 
